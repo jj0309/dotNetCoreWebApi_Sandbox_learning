@@ -23,20 +23,40 @@ namespace _dotnetSandBox.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(_characterService.GetAllCharacters().Result);
+            ServiceResponse<List<GetCharacterDto>> result = await _characterService.GetAllCharacters();
+            return Ok(result.data);
         }
 
         [HttpGet("GetSingle/{id}")]
         public async Task<IActionResult> GetSingle(int id)
         {
-            return Ok( _characterService.GetCharacterById(id).Result);
+            ServiceResponse<GetCharacterDto> result = await _characterService.GetCharacterById(id);
+            return Ok(result.data);
         }
 
         [HttpPost("AddCharacter")]
         public async Task<IActionResult> AddCharacter(AddCharacterDto newCharacter)
         {
-            return Ok(_characterService.AddCharacter(newCharacter).Result);
-            
+            ServiceResponse<List<GetCharacterDto>> result = await _characterService.AddCharacter(newCharacter);
+            return Ok(result.data);
+        }
+
+        [HttpPut("UpdateCharacter")]
+        public async Task<IActionResult> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+        {
+           ServiceResponse<GetCharacterDto> response = await _characterService.UpdateCharacter(updatedCharacter);
+            if(response.success)
+                return Ok(response.data);
+            return NotFound(response);   
+        }
+
+        [HttpDelete("DeleteCharacter/{id}")]
+        public async Task<IActionResult> DeleteCharacter(int id)
+        {
+            ServiceResponse<List<GetCharacterDto>> response = await _characterService.DeleteCharacter(id);
+            if(response.success)
+                return Ok(response.data);
+            return NotFound(response);
         }
     }
 }
