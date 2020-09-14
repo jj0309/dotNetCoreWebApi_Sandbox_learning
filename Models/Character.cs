@@ -9,5 +9,6 @@ namespace _dotnetSandBox.Models
         public int defense { get; set; } = 10;
         public int intelligence { get; set; } = 10;
         public RpgClass playClass { get; set; } = RpgClass.knight;
+        public User user { get; set; }
     }
 }

@@ -1,13 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using _dotnetSandBox.Dtos.Character;
 using _dotnetSandBox.Models;
 using _dotnetSandBox.Services.CharacterService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _dotnetSandBox.Controllers
 {
+    
+    [Authorize]//requires to be logged to make calls
     [ApiController]
     [Route("[controller]")]
     public class CharacterController : ControllerBase
@@ -20,10 +24,12 @@ namespace _dotnetSandBox.Controllers
 
         }
 
+        //[AllowAnonymous] // allows to get called without being logged
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            ServiceResponse<List<GetCharacterDto>> result = await _characterService.GetAllCharacters();
+            int userId = int.Parse(User.Claims.FirstOrDefault(c=>c.Type == ClaimTypes.NameIdentifier).Value);
+            ServiceResponse<List<GetCharacterDto>> result = await _characterService.GetAllCharacters(userId);
             return Ok(result.data);
         }
 

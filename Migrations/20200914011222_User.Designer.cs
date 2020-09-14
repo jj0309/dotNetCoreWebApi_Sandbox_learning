@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _dotnetSandBox.Data;
 
 namespace _dotnetSandBox.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200914011222_User")]
+    partial class User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,12 +46,7 @@ namespace _dotnetSandBox.Migrations
                     b.Property<int>("strenght")
                         .HasColumnType("int");
 
-                    b.Property<int?>("userid")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
-
-                    b.HasIndex("userid");
 
                     b.ToTable("Characters");
                 });
@@ -73,13 +70,6 @@ namespace _dotnetSandBox.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("_dotnetSandBox.Models.Character", b =>
-                {
-                    b.HasOne("_dotnetSandBox.Models.User", "user")
-                        .WithMany("characters")
-                        .HasForeignKey("userid");
                 });
 #pragma warning restore 612, 618
         }

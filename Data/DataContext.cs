@@ -13,5 +13,6 @@ namespace _dotnetSandBox.Data
 
         //table Characters in the db
         public DbSet<Character> Characters {get;set;}
+        public DbSet<User> Users {get;set;}
     }
 }
